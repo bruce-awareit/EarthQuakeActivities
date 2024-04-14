@@ -1,2 +1,2 @@
 # EarthQuakeActivities
-Draw scatter XY chart of earth quake activities of CWA, Taiwan.
+Draw a scatter XY chart of earth quake activities of CWA, Taiwan.
