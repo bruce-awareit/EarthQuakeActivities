@@ -5,7 +5,7 @@ from plotting import draw_plot
 
 def main():
     # 讀取 CSV 檔案並處理資料
-    file_path = 'data/earthquake_data.csv'
+    file_path = '../data/earthquake_data.csv'
     df = read_csv(file_path)
     if df is not None:
         keyword = '花蓮縣'

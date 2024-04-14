@@ -12,7 +12,7 @@ import os
 
 
 # Set the desired download folder (replace with your path)
-download_folder = "./data/"
+download_folder = "../data/"
 
 # Set the desired filename
 new_filename = "earthquake_data.csv"
