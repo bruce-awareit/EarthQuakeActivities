@@ -1,8 +1,14 @@
 # -*- coding: utf-8 -*-
 
-import pandas as pd
-import matplotlib.pyplot as plt
-import math
+try:
+    import pandas as pd
+    import matplotlib.pyplot as plt
+    import math
+except ImportError as e:
+    print(f"Import error: {e}\n")
+    print("Please make sure the required modules are installed and their paths are correctly set.\n")
+    print("You can use 'pip install pandas matplotlib' to install the required modules.\n")
+    exit()
 
 def read_csv():
     # 讀取 CSV 檔案，跳過第一列

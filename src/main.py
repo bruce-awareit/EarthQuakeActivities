@@ -1,7 +1,13 @@
-#-*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 
-from data_processing import read_csv, filter_data
-from plotting import draw_plot
+try:
+    from data_processing import read_csv, filter_data
+    from plotting import draw_plot
+except ImportError as e:
+    print(f"Import error: {e}\n")
+    print("Please make sure the required modules are installed and their paths are correctly set.\n")
+    print("You can use 'pip install pandas matplotlib' to install the required modules.\n")
+    exit()
 
 def main():
     # 讀取 CSV 檔案並處理資料
@@ -22,3 +28,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+
