@@ -42,8 +42,7 @@ def download_data():
 
         # Wait for the download button to be clickable
         wait = WebDriverWait(driver, 10)
-        download_button = wait.until(EC.element_to_be_clickable((By.XPATH, "//a[@class='BaSet csv' and @href='javascript:' and @title='匯出地震資料 (地震活動彙整.csv)' and @onclick='exportCSV()']")))
-
+        download_button = wait.until(EC.element_to_be_clickable((By.XPATH, "//a[contains(@class, 'BaSet csv') and @title='匯出地震資料 (地震活動彙整.csv)']")))
         # Click the download button
         try:
             download_button.click()
@@ -51,7 +50,7 @@ def download_data():
             raise Exception(f"無法點擊下載按鈕: {e}")
 
         # Wait for the download to complete
-        time.sleep(5)  # Adjust this wait time based on your internet speed and file size
+        time.sleep(10)  # Adjust this wait time based on your internet speed and file size
 
         # Get the latest downloaded file
         downloaded_files = [os.path.join(download_folder, file) for file in os.listdir(download_folder)]
@@ -79,8 +78,9 @@ def download_data():
         print(f"錯誤發生: {e}")
 
     finally:
-        # Close the browser
-        driver.quit()
+        if driver is not None:
+            # Close the browser
+            driver.quit()
 
 if __name__ == "__main__":
     download_data()

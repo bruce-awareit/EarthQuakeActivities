@@ -12,7 +12,7 @@ except ImportError as e:
 def read_csv(file_path):
     try:
         # 讀取 CSV 檔案，跳過第一列，並解析日期時間格式
-        df = pd.read_csv(file_path, skiprows=1, parse_dates=['地震時間'])
+        df = pd.read_csv(file_path, skiprows=[2], parse_dates=['地震時間'])
         df['地震時間'] = pd.to_datetime(df['地震時間'], format='%Y-%m-%d %H:%M:%S')
 #        print(df.head)
         return df
