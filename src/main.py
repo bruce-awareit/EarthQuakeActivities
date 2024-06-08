@@ -3,6 +3,7 @@
 try:
     from data_processing import read_csv, filter_data
     from plotting import draw_plot
+    import sys
 except ImportError as e:
     print(f"Import error: {e}\n")
     print("Please make sure the required modules are installed and their paths are correctly set.\n")
@@ -12,6 +13,10 @@ except ImportError as e:
 def main():
     # 讀取 CSV 檔案並處理資料
     file_path = 'data/earthquake_data.csv'
+
+    if len(sys.argv) == 2:
+        file_path = sys.argv[1]
+
     df = read_csv(file_path)
     if df is not None:
         keyword = '花蓮縣'
