@@ -12,7 +12,7 @@ except ImportError as e:
     exit()
 
 # Regular Expression
-pattern = r'^[a-zA-Z0-9_/\.]{8,}$'
+pattern = r'^[A-Za-z\u4e00-\u9fa5][A-Za-z/\.\u4e00-\u9fa5\d]{7,}$'
 
 def check_string(s):
     return re.match(pattern, s) is not None
