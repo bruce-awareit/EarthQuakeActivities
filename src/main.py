@@ -4,17 +4,24 @@ try:
     from data_processing import read_csv, filter_data
     from plotting import draw_plot
     import sys
+    import re
 except ImportError as e:
     print(f"Import error: {e}\n")
     print("Please make sure the required modules are installed and their paths are correctly set.\n")
     print("You can use 'pip install pandas matplotlib' to install the required modules.\n")
     exit()
 
+# Regular Expression
+pattern = r'^[a-zA-Z0-9_/\.]{8,}$'
+
+def check_string(s):
+    return re.match(pattern, s) is not None
+
 def main():
     # 讀取 CSV 檔案並處理資料
     file_path = 'data/earthquake_data.csv'
 
-    if len(sys.argv) == 2:
+    if len(sys.argv) == 2 and check_string(sys.argv[1]):
         file_path = sys.argv[1]
 
     df = read_csv(file_path)
