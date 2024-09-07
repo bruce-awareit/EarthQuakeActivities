@@ -8,6 +8,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import time
 import os
+import chardet
 
 # Set the desired download folder (replace with your path)
 download_folder = "./data/"
@@ -62,8 +63,11 @@ def download_data():
 
         # Convert file encoding to UTF-8 and save
         try:
-            with open(renamed_file, "r", encoding="big5") as f:
-                data = f.read()
+            with open(renamed_file, "rb") as f:
+                rawdata = f.read()
+                encoding = chardet.detect(rawdata)['encoding']
+                data = rawdata.decode(encoding, errors='ignore')
+
             with open(renamed_file, "w", encoding="utf-8") as f:
                 f.write(data)
         except Exception as e:
