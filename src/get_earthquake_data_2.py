@@ -11,7 +11,11 @@ import os
 import chardet
 
 # Set the desired download folder (replace with your path)
-download_folder = "./data/"
+download_folder = os.path.join(os.getcwd(), "data")
+
+# 檢查資料夾是否存在，若不存在則建立資料夾
+if not os.path.exists(download_folder):
+    os.makedirs(download_folder)
 
 # Set the desired filename
 new_filename = "earthquake_data.csv"
@@ -21,12 +25,12 @@ def set_chrome_options():
     options.add_argument("--headless")  # 隱藏瀏覽器視窗
     options.add_argument("--no-sandbox")
     options.add_argument("--disable-dev-shm-usage")
-    options.add_experimental_option("prefs", {
-        "download.default_directory": download_folder,
-        "download.prompt_for_download": False,
-        "download.directory_upgrade": True,
-        "safebrowsing.enabled": True
-    })
+    options.add_experimental_option('prefs', {
+    "download.default_directory": download_folder,  # 自動下載路徑
+    "download.prompt_for_download": False,       # 不顯示下載視窗
+    "download.directory_upgrade": True,
+    "safebrowsing.enabled": True                 # 允許下載
+})
     return options
 
 def handle_import_error(package_name):
@@ -42,16 +46,26 @@ def download_data():
         driver.get("https://scweb.cwa.gov.tw/zh-tw/earthquake/data")
 
         # Wait for the download button to be clickable
-        wait = WebDriverWait(driver, 10)
-        download_button = wait.until(EC.element_to_be_clickable((By.XPATH, "//a[contains(@class, 'BaSet csv') and @title='匯出地震資料 (地震活動彙整.csv)']")))
+        # wait = WebDriverWait(driver, 10)
+        download_button = WebDriverWait(driver, 20).until(
+        EC.element_to_be_clickable((By.XPATH, "//a[text()='CSV']"))
+        )
         # Click the download button
         try:
             download_button.click()
+
+            # 檢查下載是否完成
+            downloaded_files = os.listdir(download_folder)
+            if any(file.endswith('.csv') for file in downloaded_files):
+                print("CSV 檔案下載成功")
+            else:
+                print("CSV 檔案下載失敗")
+
         except Exception as e:
             raise Exception(f"無法點擊下載按鈕: {e}")
 
         # Wait for the download to complete
-        time.sleep(10)  # Adjust this wait time based on your internet speed and file size
+        time.sleep(5)  # Adjust this wait time based on your internet speed and file size
 
         # Get the latest downloaded file
         downloaded_files = [os.path.join(download_folder, file) for file in os.listdir(download_folder)]
